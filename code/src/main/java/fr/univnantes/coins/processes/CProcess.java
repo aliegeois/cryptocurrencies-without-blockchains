@@ -31,6 +31,7 @@ public abstract class CProcess implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		running = true;
 		while(running) {
