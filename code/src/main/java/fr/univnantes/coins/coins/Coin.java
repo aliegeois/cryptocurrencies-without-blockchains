@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import fr.univnantes.coins.main.Network;
 
 public class Coin extends UnsignedChunk implements Comparable<Coin> {
-	private final SignedChunk signatures[] = (SignedChunk[])Stream.generate(() -> null).limit(Network.numberNotaries()).toArray();
+	private final SignedChunk signatures[] = Stream.generate(() -> null).limit(Network.numberNotaries()).toArray(SignedChunk[]::new);
 	private transient int count = 0;
 	
 	public Coin(int coinId, int sequenceNumber, int ownerId) {
@@ -13,9 +13,9 @@ public class Coin extends UnsignedChunk implements Comparable<Coin> {
 	}
 	
 	public boolean isValid() {
-		count = 0;
+		this.count = 0;
 
-		for(int i = 0; i < signatures.length; i ++) {
+		for(int i = 0; i < signatures.length; i++) {
 			if(signatures[i] == null) {
 				count ++;
 			} else {
@@ -31,7 +31,6 @@ public class Coin extends UnsignedChunk implements Comparable<Coin> {
 
 	public boolean setSignature(int senderId, SignedChunk sc) {
 		UnsignedChunk usc = sc.unsign(senderId);
-
 		if(signatures[senderId] != null || usc.coinId != coinId || usc.ownerId != ownerId || usc.sequenceNumber != sequenceNumber) {
 			return false;
 		} else {
