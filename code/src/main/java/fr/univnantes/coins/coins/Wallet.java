@@ -11,7 +11,7 @@ public class Wallet {
 
 	protected final int ownerId;
 	
-	public Wallet (int ownerId) {
+	public Wallet(int ownerId) {
 		this.ownerId = ownerId;
 	}
 

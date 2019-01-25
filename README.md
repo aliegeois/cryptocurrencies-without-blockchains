@@ -8,3 +8,19 @@
 - Les notaires doivent-ils garder une liste des clients pour les notifier de l'ajout / suppression de notaires ?
 - Avoir un sous ensemble de notaires dits "de confiance absolue" qui ne bougent pas souvent et qui se connaissent entre eux. Un ajout/suppression de notaire "annexe" (donc pas de confiance absolue) se fait à 2/3 (l'unanimité ??) parmi ces notaires. Les clients ont des références vers ces notaires là uniquement et lors d'une transaction les notaires de confiance absolue passent les demandes aux notaires annexes. L'ajout de notaire "de confiance absolue" peut être couteux en nombre de messages
 - Avoir un système de notation pour les notaires ?
+
+
+
+## Idées du 25/01:
+
+Lorsqu'un nouveau notaire arrive, comment le mettre à jour au niveau des transactions déjà effectuées ?  
+
+Il demande à tous les notaires de lui envoyer l'état de leurs transactions.  
+On crée un set dans lequel on met chaque état ainsi que le nombre de fois qu'il a été reçu.  
+On récupère l'état ayant le plus d'occurences et on le définit comme étant l'état actuel du nouveau notaire.  
+
+Ex:  
+`En`: état normal envoyé par 3 notaires  
+`Eb`: état byzantin envoyé par 1 notaire  
+{ `En` x 3, `Eb` x 1 }  
+`En` est le plus présent, il est conservé
