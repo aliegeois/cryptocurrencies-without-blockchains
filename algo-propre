@@ -1,0 +1,21 @@
+coin: int
+
+Notary
+	accepts: <int, Client> [nbCoin][n]
+
+Client::isMine(coin)
+	demande à n - t notaires,
+	si t + 1 disent oui,
+	alors oui,
+	sinon non
+
+Client::send(coin, to)
+	sendToAllNotaries_M1(coin, to)
+
+
+Notary::receive_M1(coin, to, from)
+	waitUntil(∃ sni : | { i | accepts[coin][i] = <sn, from> } | > n - t)
+	sendToAllNotaries_M2(coin, to, sn)
+
+Notary::receive_M2(coin, to, sn, Ni)
+	accepts[coin][Ni] <- <sn + 1, to>
