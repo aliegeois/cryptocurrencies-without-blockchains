@@ -2,14 +2,14 @@ package fr.univnantes.cryptocurrencies;
 
 public class Coin {
 
-	private int coinId, sequenceNumber;
+	private int coinId/*, sequenceNumber*/;
 
-	private Client owner;
+	//private Client owner;
 
-	public Coin(int coinId, int sequenceNumber, Client owner) {
+	public Coin(int coinId/*, int sequenceNumber, Client owner*/) {
 		this.coinId = coinId;
-		this.sequenceNumber = sequenceNumber;
-		this.owner = owner;
+		//this.sequenceNumber = sequenceNumber;
+		//this.owner = owner;
 	}
 
 	public int getCoinId() {
@@ -20,7 +20,7 @@ public class Coin {
 		this.coinId = coinId;
 	}
 
-	public int getSequenceNumber() {
+	/*public int getSequenceNumber() {
 		return sequenceNumber;
 	}
 
@@ -34,5 +34,5 @@ public class Coin {
 
 	public void setOwner(Client owner) {
 		this.owner = owner;
-	}
+	}*/
 }

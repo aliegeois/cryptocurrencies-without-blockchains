@@ -1,7 +1,7 @@
 coin: int
 
 Notary
-	accepts: <int, Client> [nbCoin][n]
+	accepts: <int, Client>nbCoin][n]
 
 Client::isMine(coin)
 	demande à n - t notaires,

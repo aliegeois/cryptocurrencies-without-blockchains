@@ -15,12 +15,12 @@ public class Application {
 		}
 
 		for (int i = 0; i < TOTAL_COINS; i++) {
-			coinsList[i] = new Coin(i, 0, clientsList[i % TOTAL_CLIENTS]);
+			coinsList[i] = new Coin(i/*, 0, clientsList[i % TOTAL_CLIENTS]*/);
 		}
 
 		for (int i = 0; i < TOTAL_COINS; i++) {
 			for (int j = 0; j < TOTAL_NOTARIES; j++) {
-				acceptances[i][j] = new Acceptance(coinsList[i].getSequenceNumber(), coinsList[i].getOwner());
+				acceptances[i][j] = new Acceptance(0, clientsList[0]);
 			}
 		}
 

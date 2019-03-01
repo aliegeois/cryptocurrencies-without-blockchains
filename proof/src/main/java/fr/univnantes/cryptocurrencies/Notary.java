@@ -23,12 +23,12 @@ public class Notary {
 
 	public void receiveFromClient(Coin coin, Client receiver, Client sender) {
 		int mySequenceNumber = accepts[coin.getCoinId()][myNumber].getSequenceNumber();
-		Client owner = accepts[coin.getCoinId()][myNumber].getOwner();
+		//Client owner = accepts[coin.getCoinId()][myNumber].getOwner();
 //                    System.out.println(owner);
 
-		if (coin.getOwner() == sender && mySequenceNumber == coin.getSequenceNumber() && owner == coin.getOwner()) {
+		//if (coin.getOwner() == sender && mySequenceNumber == coin.getSequenceNumber() && owner == coin.getOwner()) {
 			sendToAllNotaries(coin, receiver, mySequenceNumber);
-		}
+		//}
 	}
 
 	public void sendToAllNotaries(Coin coin, Client receiver, int sequenceNumber) {
@@ -40,8 +40,8 @@ public class Notary {
 
 	public void receiveFromNotary(Coin coin, Client receiver, int sequenceNumber) {
 		accepts[coin.getCoinId()][myNumber] = new Acceptance(sequenceNumber + 1, receiver);
-		coin.setOwner(receiver);
-		coin.setSequenceNumber(accepts[coin.getCoinId()][myNumber].getSequenceNumber());
+		//coin.setOwner(receiver);
+		//coin.setSequenceNumber(accepts[coin.getCoinId()][myNumber].getSequenceNumber());
 	}
 
 	public Acceptance[][] getAccepts() {
