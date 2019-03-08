@@ -4,6 +4,7 @@ const Network = require('./Network'),
 
 /**
  * @typedef {{coin: number, from: Client, to: Client}} Transaction
+ * @typedef {{sequenceNumber: number, clientId: number}} Accept
  */
 class Notary {
 	/**
@@ -12,7 +13,8 @@ class Notary {
 	constructor(network) {
 		this.id = Notary.id++;
 		/**
-		 * @type {Array.<Array.<{sequenceNumber: number, clientId: number}>>}
+		 * @type {Accept[][]}
+		 * @private
 		 */
 		this.accepts = new Array(nbCoins).fill(0).map(() => {
 			return new Array(nbNotaries).fill(0).map(() => {
@@ -23,13 +25,12 @@ class Notary {
 			});
 		});
 
-		/**
-		 * @private
-		 */
+		/** @private */
 		this._network = network;
 
 		/**
 		 * @type {Transaction[]}
+		 * @private
 		 */
 		this.transactionsWaiting = [];
 	}
@@ -41,11 +42,9 @@ class Notary {
 	 * @returns {number} sequenceNumber
 	 */
 	condition(coin, from) {
-		/**
-		 * @type {Map<number, number>}
-		 */
+		/** @type {Map<number, number>} */
 		let occurences = new Map();
-		this.accepts[coin].forEach(({sequenceNumber, clientId}) => {
+		this.accepts[coin].forEach(({ sequenceNumber, clientId }) => {
 			if(clientId === from.id) {
 				if(occurences.has(sequenceNumber))
 					occurences.set(sequenceNumber, occurences.get(sequenceNumber) + 1);
@@ -116,26 +115,49 @@ class Notary {
 		callback(this.accepts[coin][this.id].clientId === client.id);
 	}
 
+	/**
+	 * 
+	 * @param {function(number, Accept[][]): void} callback 
+	 */
 	updateColleague(callback) {
 		callback(this.id, this.accepts);
 	}
 
 	updateMePlease() {
+		/** @type {Accept[][]} */
 		let myAccept = new Array(nbCoins).fill(0).map(() => {
 			return new Array(nbNotaries).fill(0).map(() => {
-				return {
-					sequenceNumber: 0,
-					clientId: 0
-				};
+				return null;
 			});
 		});
 
+		let received = 0;
+
+		/** @type {Accept[]} */
 		let columnsReceived = new Array(nbNotaries).fill(null);
-		let columnsNotReceived = new Array(nbNotaries).fill(null);
+		/** @type {Accept[]} */
+		let columnsNotReceived = new Array(nbNotaries).fill({ sequenceNumber: -1, clientId: -1 });
 		
 		this._network.askAllNotariesForUpdate((notaryId, notaryAccept) => {
-			columnsReceived[notaryId] = notaryAccept;
-			columnsNotReceived[notaryId] = null;
+			received++;
+			if(received >= nbNotaries * 2 / 3) {
+				for(let i = 0; i < nbCoins; i++) {
+					if(columnsReceived[i] === null) {
+						let occurences = [];
+						for(let j = 0; j < nbNotaries; j++) {
+							
+						}
+					}
+				}
+
+				
+			} else {
+				for(let i = 0; i < nbCoins; i++)
+					myAccept[i][notaryId] = notaryAccept[i][notaryId];
+				
+				columnsReceived[notaryId] = notaryAccept[notaryId];
+				columnsNotReceived[notaryId] = null;
+			}
 		});
 	}
 }

@@ -1,18 +1,16 @@
+/** @module Network */
+
 const Notary = require('./Notary'),
 	Client = require('./Client'),
 	{ inducedDelay } = require('./constants');
 
-module.exports = class Network {
+class Network {
 	constructor() {
-		/**
-		 * @type {Client[]}
-		 */
+		/** @type {Client[]} */
 		this.clients = [];
-		/**
-		 * @type {Notary[]}
-		 */
+		/** @type {Notary[]} */
 		this.notaries = [];
-
+		/** @type {number} */
 		this.inducedDelay = inducedDelay;
 	}
 
@@ -49,9 +47,11 @@ module.exports = class Network {
 
 	/**
 	 * 
-	 * @param {number} ni Identifiant du notaire à mettre à jour
+	 * @param {function(number, Array.<Array.<{sequenceNumber: number, clientId: number}>>): void} callback 
 	 */
 	askAllNotariesForUpdate(callback) {
 		this.notaries.forEach(notary => notary.updateColleague(callback));
 	}
-};
+}
+
+module.exports = Network;
