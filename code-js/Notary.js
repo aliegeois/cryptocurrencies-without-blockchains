@@ -73,13 +73,13 @@ class Notary {
 	 * @param {Client} to 
 	 */
 	receive_M1(coin, from, to) {
-		console.log(`${this.id}: receive_M1(${coin}, ${from.id}, ${to.id})`);
+		//console.log(`${this.id}: receive_M1(coin: ${coin}, from: ${from.id}, to: ${to.id})`);
 		let sequenceNumber;
 		if((sequenceNumber = this.condition(coin, from)) === -1) {
-			console.log('condition en attente');
+			//console.log('condition en attente');
 			this.transactionsWaiting.push({ coin, from, to });
 		} else {
-			console.log('condition ok, sn = ' + sequenceNumber);
+			//console.log('condition ok, sn = ' + sequenceNumber);
 			this._network.sendToAllNotaries_M2(coin, this, to, sequenceNumber);
 		}
 	}
@@ -92,7 +92,7 @@ class Notary {
 	 * @param {number} sn 
 	 */
 	receive_M2(coin, ni, to, sn) {
-		console.log(`${this.id}: receive_M2(${coin}, ${ni.id}, ${to.id}, ${sn})`);
+		console.log(`${this.id}: receive_M2(coin: ${coin}, ni: ${ni.id}, to: ${to.id}, sn: ${sn})`);
 		this.accepts[coin][ni.id] = {
 			sequenceNumber: sn + 1,
 			clientId: to.id
@@ -114,6 +114,29 @@ class Notary {
 	 */
 	isTheir(client, coin, callback) {
 		callback(this.accepts[coin][this.id].clientId === client.id);
+	}
+
+	updateColleague(callback) {
+		callback(this.id, this.accepts);
+	}
+
+	updateMePlease() {
+		let myAccept = new Array(nbCoins).fill(0).map(() => {
+			return new Array(nbNotaries).fill(0).map(() => {
+				return {
+					sequenceNumber: 0,
+					clientId: 0
+				};
+			});
+		});
+
+		let columnsReceived = new Array(nbNotaries).fill(null);
+		let columnsNotReceived = new Array(nbNotaries).fill(null);
+		
+		this._network.askAllNotariesForUpdate((notaryId, notaryAccept) => {
+			columnsReceived[notaryId] = notaryAccept;
+			columnsNotReceived[notaryId] = null;
+		});
 	}
 }
 Notary.id = 0;

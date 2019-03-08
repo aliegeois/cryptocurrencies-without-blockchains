@@ -24,3 +24,10 @@ Ex:
 `Eb`: état byzantin envoyé par 1 notaire  
 { `En` x 3, `Eb` x 1 }  
 `En` est le plus présent, il est conservé
+
+## Idée de Charles du 08/03
+
+Ajout d'un notaire:
+Après qu'un nouveau notaire se soit mis à jour avec le tableau accepts des autres notaires, il n'envoie pas sa colonne aux autres notaires. Elle sera mise à jour petit à petit par les autres notaires au fur et à mesure qu'il (le nouveau notaire) envoie des M2
+
+Pour les autres notaires, lors de l'ajout d'un nouveau, on met des null dans sa colonne et pour la réception d'un M1, si null est présent dans une colonne, on l'exclus du calcul. Quand un M2 est reçu, on remplace le null par la valeur donnée.

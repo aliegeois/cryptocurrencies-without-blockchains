@@ -14,11 +14,15 @@ for(let i = 0; i < nbClients; i++)
 for(let i = 0; i < nbNotaries; i++)
 	network.notaries.push(new Notary(network));
 
-//console.log(network.notaries[0]);
 
-network.clients[0].send(0, network.clients[1]);
+network.clients[0].isMine(0);
+network.clients[1].isMine(0);
 
-console.log(showCoin(0));
-console.log(showCoin(1));
-console.log(network.clients[0].isMine(0));
-console.log(network.clients[1].isMine(0));
+setTimeout(() => {
+	network.clients[0].send(0, network.clients[1]);
+
+	setTimeout(() => {
+		network.clients[0].isMine(0);
+		network.clients[1].isMine(0);
+	}, 5000);
+}, 5000);

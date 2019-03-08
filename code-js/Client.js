@@ -1,5 +1,5 @@
 const Network = require('./Network');
-const { nbNotaries} = require('./constants');
+const { nbNotaries } = require('./constants');
 
 class Client {
 	/**
@@ -19,10 +19,12 @@ class Client {
 	 */
 	isMine(coin) {
 		let validations = 0;
-		this._network.askAllNotariesIfMine(this, coin, (mine) => {
+		this._network.askAllNotariesIfMine(this, coin, mine => {
 			validations += mine ? 1 : 0;
-			if(validations >= nbNotaries * 2 / 3)
+			/*if(validations >= nbNotaries * 2 / 3)
 				console.log(`Client[${this.id}]: coin ${coin} is mine`);
+			else
+				*/console.log(`Client[${this.id}]: coin ${coin} is mine at ${validations / nbNotaries * 100}%`);
 		});
 	}
 

@@ -1,5 +1,6 @@
 const Notary = require('./Notary'),
-	Client = require('./Client');
+	Client = require('./Client'),
+	{ inducedDelay } = require('./constants');
 
 module.exports = class Network {
 	constructor() {
@@ -11,6 +12,8 @@ module.exports = class Network {
 		 * @type {Notary[]}
 		 */
 		this.notaries = [];
+
+		this.inducedDelay = inducedDelay;
 	}
 
 	/**
@@ -20,7 +23,7 @@ module.exports = class Network {
 	 * @param {Client} to Le client qui reçoit la pièce
 	 */
 	sendToAllNotaries_M1(coin, from, to) {
-		this.notaries.forEach(notary => notary.receive_M1(coin, from, to));
+		this.notaries.forEach(notary => setTimeout(() => notary.receive_M1(coin, from, to), this.inducedDelay + Math.random() * this.inducedDelay / 10));
 	}
 
 	/**
@@ -31,7 +34,7 @@ module.exports = class Network {
 	 * @param {number} sn Le numéro de séquence de la pièce
 	 */
 	sendToAllNotaries_M2(coin, ni, to, sn) {
-		this.notaries.forEach(notary => notary.receive_M2(coin, ni, to, sn));
+		this.notaries.forEach(notary => setTimeout(() => notary.receive_M2(coin, ni, to, sn), this.inducedDelay + Math.random() * this.inducedDelay / 10));
 	}
 
 	/**
@@ -41,6 +44,14 @@ module.exports = class Network {
 	 * @param {function(boolean):void} callback 
 	 */
 	askAllNotariesIfMine(client, coin, callback) {
-		this.notaries.forEach(notary => notary.isTheir(client, coin, callback));
+		this.notaries.forEach(notary => setTimeout(() => notary.isTheir(client, coin, callback), this.inducedDelay + Math.random() * this.inducedDelay / 10));
+	}
+
+	/**
+	 * 
+	 * @param {number} ni Identifiant du notaire à mettre à jour
+	 */
+	askAllNotariesForUpdate(callback) {
+		this.notaries.forEach(notary => notary.updateColleague(callback));
 	}
 };
