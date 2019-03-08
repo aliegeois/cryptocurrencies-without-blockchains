@@ -37,23 +37,23 @@ public class Notary {
 		return valide > Network.notaries.size() * 2 / 3.0 ? sn : -1;
 	}
 
-	public void receive(int coin, Client to, Client from) {
+	public void receive_M1(int coin, Client to, Client from) {
 		try {
 			int sn = -1;
-			while((sn = condition(coin, from)) != -1) {
+			while((sn = condition(coin, from)) == -1) {
 				wait();
 			}
-			sendToAllNotaries(coin, to, sn);
+			sendToAllNotaries_M2(coin, to, sn);
 		} catch(InterruptedException e) {
 
 		}
 	}
 
-	private void sendToAllNotaries(int coin, Client to, int sn) {
-		Network.notaries.forEach(notary -> notary.receive(coin, to, sn, this.id));
+	private void sendToAllNotaries_M2(int coin, Client to, int sn) {
+		Network.notaries.forEach(notary -> notary.receive_M2(coin, to, sn, this.id));
 	}
 
-	private void receive(int coin, Client to, int sn, int ni) {
+	private void receive_M2(int coin, Client to, int sn, int ni) {
 		accepts.get(coin).set(ni, new Pair<Integer, Client>(sn + 1, to));
 		notify();
 	}

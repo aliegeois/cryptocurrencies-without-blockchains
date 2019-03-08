@@ -18,7 +18,7 @@ public class Client {
 	}
 
 	private void sendToAllNotaries_M1(int coin, Client to) {
-		Network.notaries.forEach(notary -> notary.receive(coin, to, this));
+		Network.notaries.forEach(notary -> notary.receive_M1(coin, to, this));
 	}
 
 	@Override
