@@ -1,0 +1,27 @@
+Problème rencontré avec l'algorithme où chaque notaire possède un tableau contenant des informations sur les autres notaires:
+1.
+Dans le cas où une demande de transaction se propage lentement d'un notaire à l'autre, il est possible que les notaires finissent par se désynchroniser pour finir dans un état où le système est bloqué, la pièce n'appartient à personne (à 2/3)
+Ce problème apparait si les notaires reçoivent une transaction les uns après les autres mais reçoivent la modification provenant des autres notaires avant la transaction.
+
+Exemple avec 4 notaires (nommés 1, 2, 3 et 4), 3 clients (a, b et c) et une pièce:
+a envoie la pièce à b.
+La transaction arrive à 1.
+1 valide la transaction (à 100%) et notifie les autres notaires.
+2, 3 et 4 mettent à jour leur tableau de 1.
+La transaction arrive à 2.
+2 valide la transaction (à 75%) et notifie les autres notaires.
+1, 3 et 4 mettent à jour leur tableau de 2.
+La transaction arrive à 3.
+3 ne valide pas la transaction (seulement 50% de valeurs identiques).
+La transaction arrive à 4.
+4 ne valide pas la transaction (seulement 50% de valeurs identiques).
+A ce niveau si a ou b demande si la pièce leur appartient, ils reçevront chaucun une réponse négative (>33% de non)
+
+Réponses à ce problème:
+1.
+Pour chaque case du tableau en local (donc pour chaque pièce et chaque notaire) on va stocker une valeur temporaire si un notaire valide une transaction avant que l'on reçoive la transaction en question.
+Lorsque l'on finit par reçevoir cette transaction on effectue la comparaison suivante entre le numéro de séquence présent dans notre tableau local et la valeur du buffer:
+si buffer <= local_notaire alors on supprime le buffer
+si local >= buffer > local_notaire alors on remplace local_notaire par buffer
+si buffer > local alors on conserve le buffer qui correspond (possiblement) à une transaction future
+Pour prendre la décision de valider ou non la transaction, on se base sur la valeur locale puis on signale comme d'habitude aux autres notaire notre décision

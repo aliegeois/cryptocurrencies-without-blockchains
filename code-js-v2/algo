@@ -1,0 +1,16 @@
+Notary
+	id: number
+	accept: <sn, Client>[nbCoins]
+
+
+Notary::enter
+	send_M3(id)
+
+Notary::receive_M3(nid)
+	send_M4(accept[id], id) to nid
+	accept[nid] = accept[id]
+
+Notary::receive_M4(column, from)
+	accept[from] = column
+	∀ coin when (∃ <sn, Client> qui apparait au moins (n - t) fois)
+	accept[id][coin] = <sn, Client>

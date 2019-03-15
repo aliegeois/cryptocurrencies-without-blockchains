@@ -1,0 +1,5 @@
+{
+	"source": {
+		"include": ["constants.js", "Network.js", "Notary.js", "Client.js"]
+	}
+}

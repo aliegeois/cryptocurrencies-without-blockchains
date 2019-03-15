@@ -1,7 +1,7 @@
 coin: int
 
 Notary
-	accepts: <int, Client>nbCoin][n]
+	accepts: <int, Client>[nbCoin][n]
 
 Client::isMine(coin)
 	demande à n - t notaires,
@@ -14,8 +14,9 @@ Client::send(coin, to)
 
 
 Notary::receive_M1(coin, to, from)
-	waitUntil(∃ sni : | { i | accepts[coin][i] = <sn, from> } | > n - t)
+	waitUntil(∃ sni : | { i | accepts[coin][i] = (<sn, from> | <sn + 1, to>) } | > n - t)
 	sendToAllNotaries_M2(coin, to, sn)
 
 Notary::receive_M2(coin, to, sn, Ni)
-	accepts[coin][Ni] <- <sn + 1, to>
+	if(sn > accepts[coin][Ni].sn)
+		accepts[coin][Ni] <- <sn + 1, to>
