@@ -1,11 +1,7 @@
 **/.vscode/
 **/.project
 **/.settings/
+**/node_modules/
 **/target/
 **/bin/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+pdfs/

@@ -25,3 +25,6 @@ si buffer <= local_notaire alors on supprime le buffer
 si local >= buffer > local_notaire alors on remplace local_notaire par buffer
 si buffer > local alors on conserve le buffer qui correspond (possiblement) à une transaction future
 Pour prendre la décision de valider ou non la transaction, on se base sur la valeur locale puis on signale comme d'habitude aux autres notaire notre décision
+
+Algorithme où chaque notaire ne possède qu'un tableau de ses valeurs:
+Si on reçoit une demande de valeur de la part d'un notaire au sujet d'une transaction que l'on a pas encore reçu, on stocke l'information du notaire que l'on concerne jusqu'à ce que l'on recoive cette transaction
