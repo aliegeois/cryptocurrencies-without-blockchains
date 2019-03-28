@@ -1,5 +1,5 @@
 module.exports = {
 	nbCoins: 100,
-	nbClients: 30,
-	nbNotaries: 4,
+	nbClients: 7,
+	nbNotaries: 9,
 	inducedDelay: 500 };

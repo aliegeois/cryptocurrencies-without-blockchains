@@ -13,16 +13,11 @@ class Notary {
 	constructor(network) {
 		this.id = Notary.id++;
 		/**
-		 * @type {Accept[][]}
+		 * @type {Accept[]}
 		 * @private
 		 */
 		this.accepts = new Array(nbCoins).fill(0).map(() => {
-			return new Array(nbNotaries).fill(0).map(() => {
-				return {
-					sequenceNumber: 0,
-					clientId: 0
-				};
-			});
+			return { sequenceNumber: 0, clientId: 0 };
 		});
 
 		/** @private */
@@ -44,7 +39,7 @@ class Notary {
 	condition(coin, from) {
 		/** @type {Map<number, number>} */
 		let occurences = new Map();
-		this.accepts[coin].forEach(({ sequenceNumber, clientId }) => {
+		this.accepts.forEach(({ sequenceNumber, clientId }) => {
 			if(clientId === from.id) {
 				if(occurences.has(sequenceNumber))
 					occurences.set(sequenceNumber, occurences.get(sequenceNumber) + 1);
@@ -52,7 +47,6 @@ class Notary {
 					occurences.set(sequenceNumber, 1);
 			}
 		});
-		console.log('occurences', this.id, occurences);
 
 		let valide = 0, sequenceNumber = -1;
 		for(let [sn, count] of occurences.entries()) {

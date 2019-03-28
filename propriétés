@@ -1,0 +1,26 @@
+Broadcast(M, sn, i)
+Deliver(M, sn, i)
+
+- Validité: Si Pi (correct) délivre M de la part de Pj (correct), Pj a envoyé M
+- Pi (correct) ne peut délivrer qu'un message pour un sn et i donnés
+- Pour sn et i fixés, Pi (correct) et Pj (correct) ne peuvent pas délivrer un message différent
+- Il est impossible que Pi (correct) reçoive M et que Pj (correct) ne reçoive pas M
+- Si Pi (correct) broadcast M alors Pj (correct) reçoit M
+- Si Pi (correct) broadcast M alors broadcast termine
+
+
+Papier sur les transactions
+Basé sur l'algorithme de broadcast de Bracha pour les transactions
+Dans ce papier nous considérons un protocol permettant d'arriver à un accord dans un système distribué non fiable, sachant que le nombre de processus du système peut varier au cours du temps.
+
+
+
+Nous considérons un cas réel où des personnes possèdent de l'argent et souhaitent se l'échanger entre eux.
+Pour ce faire on considère 2 entitées:
+- les "clients" qui représentent les personnes
+- les "notaires" qui représentent des banquent et qui savent à qui appartient chaque pièce du système
+Notre but sera de créer un système qui permet d'assurer la validité des transactions effectuées en supposant que le nombre de notaires byzantin est inférieur à n/3
+
+
+Nous considérons un système constitué de "notaires" qui communiquent entre eux et qui se mettent d'accord pour valider ou non une transaction,
+ainsi que des "clients" qui possèdent de l'argent qu'ils veulent transférer par l'intermédiaire des notaires
