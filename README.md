@@ -31,3 +31,7 @@ Ajout d'un notaire:
 Après qu'un nouveau notaire se soit mis à jour avec le tableau accepts des autres notaires, il n'envoie pas sa colonne aux autres notaires. Elle sera mise à jour petit à petit par les autres notaires au fur et à mesure qu'il (le nouveau notaire) envoie des M2
 
 Pour les autres notaires, lors de l'ajout d'un nouveau, on met des null dans sa colonne et pour la réception d'un M1, si null est présent dans une colonne, on l'exclus du calcul. Quand un M2 est reçu, on remplace le null par la valeur donnée.
+
+## Update du 29/03
+
+On supprime la notion du pièce, on stocke maintenant juste la quantité d'argent que possède chaque client.

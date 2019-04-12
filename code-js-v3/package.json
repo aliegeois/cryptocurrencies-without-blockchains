@@ -1,0 +1,21 @@
+{
+	"name": "crypto",
+	"version": "0.0.1",
+	"scripts": {
+		"start": "node main.js"
+	},
+	"license": "MIT",
+	"contributors": [
+		{
+			"name": "LIEGEOIS Arthur",
+			"email": "arthur.liegeois@etu.univ-nantes.fr"
+		}, {
+			"name": "PLOUHINEC Glenn",
+			"email": "glenn.plouhinec@etu.univ-nantes.fr"
+		}, {
+			"name": "BEQUET--ERMOY Charles",
+			"email": "charles.bequet--ermoy@etu.univ-nantes.fr"
+		}
+	],
+	"private": true
+}

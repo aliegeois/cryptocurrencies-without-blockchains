@@ -1,0 +1,36 @@
+Notary
+	clients: {local: int, global: int}[nbClients]
+	next: int[nbNotaries] (init à 1)
+	id: int
+	temporary_transactions: set<(client_id, sn), {received_true: int, received_false: true}>
+
+Notary::send_money(quantity, from, to)
+	v = {quantity, from, to}
+	broadcast init(id, v, next[id])
+
+Notary::receive init(j, v, sn)
+	
+
+Notary::receive echo(j, v, sn)
+	if( echo(j, v, sn) received from striclty more than (n+t)/2 different processes
+	AND ready(j, v, sn) never sent )
+		if( clients[v.from].local >= v.quantity )
+			broadcast ready(j, v, sn, true)
+		else
+			broadcast ready(j, v, sn, false)
+
+Notary::receive ready(j, v, sn, accept)
+	temporary_transactions[(v.from, sn)].received_[accept]++
+	if( ready(j, v, sn, accept) never sent )
+		if( temporary_transactions[(v.from, sn)].received_true > t + 1 )
+			broadcast ready(j, v, sn, true)
+		else if( temporary_transactions[(v.from, sn)].received_false > t + 1 )
+			broadcast ready(j, v, sn, false)
+	
+
+
+
+
+
+	if( ready(j, v, sn, true) received from at least t + 1 different notaries
+	AND ready(j, v, sn, accept) never sent )
