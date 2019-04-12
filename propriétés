@@ -18,9 +18,26 @@ Dans ce papier nous considérons un protocol permettant d'arriver à un accord d
 Nous considérons un cas réel où des personnes possèdent de l'argent et souhaitent se l'échanger entre eux.
 Pour ce faire on considère 2 entitées:
 - les "clients" qui représentent les personnes
-- les "notaires" qui représentent des banquent et qui savent à qui appartient chaque pièce du système
+- les "notaires" qui représentent des banques et qui savent à qui appartient chaque pièce du système
 Notre but sera de créer un système qui permet d'assurer la validité des transactions effectuées en supposant que le nombre de notaires byzantin est inférieur à n/3
 
 
-Nous considérons un système constitué de "notaires" qui communiquent entre eux et qui se mettent d'accord pour valider ou non une transaction,
+Nous considérons un système constitué de processus qui communiquent entre eux et qui se mettent d'accord pour valider ou non une transaction,
 ainsi que des "clients" qui possèdent de l'argent qu'ils veulent transférer par l'intermédiaire des notaires
+
+// Début
+
+
+Dans ce papier nous considérons un système décentralisé constitué de processus qui
+communiquent entre eux et qui se mettent d'accord sur le contenu d'un message.
+Notre but sera de créer un système qui permet d'assurer que les processus corrects
+délivrent un même message dont la validité est assurée si l'on suppose que le nombre
+de processus byzantin est inférieur à n/3, avec n le nombre total de processus dans
+le système
+L'une des motivations est de donner des propriétés de sûreté plus fortes que la
+blockchain. A tout instant du système, on assure que 2 messages contradictoires ne
+peuvent être validés par l'ensemble des processus corrects
+Un processus byzantin peut ne pas envoyer de messages ou en envoyer des
+contradictoires
+Nous avons construit un système permettant d'arriver à un accord entre les processus
+corrects avec n² messages en nous basant sur l'algorithme de G. Bracha
