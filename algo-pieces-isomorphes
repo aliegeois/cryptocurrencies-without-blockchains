@@ -19,14 +19,12 @@ Notary::receive echo(j, v, sn)
 		else
 			broadcast ready(j, v, sn, false)
 
-Notary::receive ready(j, v, sn, accept)
-	temporary_transactions[(v.from, sn)].received_[accept]++
-	if( ready(j, v, sn, accept) never sent )
-		if( temporary_transactions[(v.from, sn)].received_true > t + 1 )
-			broadcast ready(j, v, sn, true)
-		else if( temporary_transactions[(v.from, sn)].received_false > t + 1 )
-			broadcast ready(j, v, sn, false)
-	
+Notary::receive ready(j, v, sn)
+	temporary_transactions[(v.from, sn)].received++
+	if( ready(j, v, sn) never sent
+	AND temporary_transactions[(v.from, sn)].received > t + 1 )
+		broadcast ready(j, v, sn)
+	if( ready(j, v, sn) received )
 
 
 
@@ -34,3 +32,18 @@ Notary::receive ready(j, v, sn, accept)
 
 	if( ready(j, v, sn, true) received from at least t + 1 different notaries
 	AND ready(j, v, sn, accept) never sent )
+
+
+
+
+Ajout de notaire: bracha pour dire à tout le monde qu'on arrive
+
+
+
+Dans les messages de transaction, rajouter la quantité d'argent espéré après la transaction pour une bonne synchronisation des nouveaux
+Dans le cas où un notaire arrive pendant une transaction, il va reçevoir l'ancienen valeur du compte, si ce compte n'est jamais mis à jours et que les autres notaires partent, la valeur du compte sera perdue à jamais
+Solution: si on laisser un seul notaire arriver à la fois, "l'ancien nouveau" notaire sera mis à jour par la transaction en cours et donc la valeur du compte ne sera jamais perdue
+
+Quand un notaire reçoit les colonnes des autres pour se synchroniser, il regarde si pour une colonne une même valeur apparait t+1 fois. Si plusieurs colonnes apparaissent t+1 fois, on conserve celle qui est la plus récente
+
+Pour une transaction en cours, chaque notaire stocke un n local qui indique combien de réponse il attend. Quand un notaire part on modifie ce n pour prendre en compte le départ.
