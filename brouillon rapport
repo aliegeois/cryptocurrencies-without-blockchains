@@ -1,0 +1,49 @@
+Introduction
+	Problème: 1 phrase 
+	Approche théorique, hypothèses minimales
+	Contribution: algo, ...
+	
+Etat de l'art
+	BFT (Byzantine Fault Tolerant) - State Machine
+	Ripple: white paper
+	Bitcoin: wp
+	ETH
+	Iota
+
+Modèle
+	Consortium (rajouter la partie sur la composition du consortium)
+	1/3 byzantins
+	Asynchrone
+	Message
+---
+Développement
+
+
+Conslusion:
+Parler des améliorations possibles, comme rajouter un booléen dans ready pour valider ou refuser une transaction sans avoir à attendre indéfiniment
+
+
+
+Propriété
+
+
+Modèle: expliquer que les notaires sont différents des clients: les notaires sont un ensemble réduit "de confiance" alors que les clients doivent passer par un notaire pour effectuer des transactions
+Modèle.Consortium: le fait d'avoir des notaires ayant des buts différents aide dans le maintien du système. En effet, cela rend plus difficile la tâche de réunir 1/3 du système pour prendre le contrôle du système
+Modèle.Message: décrire le contenu d'un message: c'est une autorisation d'utiliser une somme d'argent
+
+
+Blockchain: 1/2 byzantins
+Nous: 1/3
+
+
+Modèle général: Consortium dynamique
+
+
+Problème: Créer un système de transactions sous la forme d'un consortium via un broadcast à la bracha de taille dynamique
+
+Cryptocurrencies without blockchain and causal broadcast
+
+
+Approche théorique: cryptomonnaies, transfert de monnaie sur une base de broadcast de Bracha.
+Hypothèses minimales: malicious case broadcast, <1/3 byzantins, tous les noeuds se connaissent entre eux et sont connus des utilisateurs
+Contributions: adaptation de l'algorithme de bracha aux cryptomonnaies, dynamisation du système pour ajouter/supprimer des noeuds
